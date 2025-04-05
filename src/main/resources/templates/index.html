@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tesseract Image Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background: #f7f8fa;
+        }
+
+        .container {
+            margin: auto;
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .left, .right {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .left {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right {
+            background-color: #f0f2f5;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.95rem;
+            overflow-y: auto;
+        }
+
+        .upload-box {
+            border: 2px dashed #999;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .upload-box input[type=file] {
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .loader {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .visible {
+            display: inline-block;
+        }
+
+        .json-result {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left">
+        <form method="post" action="/upload" enctype="multipart/form-data" onsubmit="showLoader()">
+            <div class="upload-box">
+                <label>📤 Upload your image:</label>
+                <input type="file" name="file" required />
+                <button type="submit">Analyze</button>
+                <div id="loader" class="loader">⏳ Processing...</div>
+            </div>
+        </form>
+    </div>
+    <div class="right">
+        <div class="json-result" th:if="${json}" th:text="${json}">Your JSON will appear here.</div>
+    </div>
+</div>
+
+<script>
+    function showLoader() {
+        document.getElementById('loader').classList.add('visible');
+    }
+</script>
+</body>
+</html>
